@@ -3,7 +3,7 @@
 
 # provider-ec-api
 
-Kubeform CRDs for [Terraform Ec Provider](https://github.com/ec/terraform-provider-ec)
+Kubeform CRDs for [Terraform Elastic Cloud Provider](https://github.com/elastic/terraform-provider-ec)
 
 ## Installation
 
