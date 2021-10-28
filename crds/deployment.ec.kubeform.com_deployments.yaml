@@ -72,6 +72,11 @@ spec:
                             description: Optionally enable debug mode for APM servers
                               - defaults to false
                             type: boolean
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              APM nodes will use. Note that this field will only work
+                              for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
@@ -158,6 +163,11 @@ spec:
                           applied to all topologies unless overridden on the topology
                           element
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Elasticsearch nodes will use. Note that this field will
+                              only work for internal users only.
+                            type: string
                           plugins:
                             description: List of Elasticsearch supported plugins,
                               which vary from version to version. Check the Stack
@@ -166,7 +176,6 @@ spec:
                               the UI and [ecctl](https://www.elastic.co/guide/en/ecctl/master/ecctl_stack_list.html)
                             items:
                               type: string
-                            minItems: 1
                             type: array
                           userSettingsJSON:
                             description: JSON-formatted user level "elasticsearch.yml"
@@ -250,9 +259,9 @@ spec:
                                 when disconnected
                               type: boolean
                           required:
+                          - alias
                           - deploymentID
                           type: object
-                        minItems: 1
                         type: array
                       resourceID:
                         description: The Elasticsearch resource unique identifier
@@ -306,6 +315,38 @@ spec:
                                     via the API or other clients.
                                   type: string
                               type: object
+                            config:
+                              description: Computed read-only configuration to avoid
+                                unsetting plan settings from 'topology.elasticsearch'
+                              items:
+                                properties:
+                                  plugins:
+                                    description: List of Elasticsearch supported plugins,
+                                      which vary from version to version. Check the
+                                      Stack Pack version to see which plugins are
+                                      supported for each version. This is currently
+                                      only available from the UI and [ecctl](https://www.elastic.co/guide/en/ecctl/master/ecctl_stack_list.html)
+                                    items:
+                                      type: string
+                                    type: array
+                                  userSettingsJSON:
+                                    description: JSON-formatted user level "elasticsearch.yml"
+                                      setting overrides
+                                    type: string
+                                  userSettingsOverrideJSON:
+                                    description: JSON-formatted admin (ECE) level
+                                      "elasticsearch.yml" setting overrides
+                                    type: string
+                                  userSettingsOverrideYaml:
+                                    description: YAML-formatted admin (ECE) level
+                                      "elasticsearch.yml" setting overrides
+                                    type: string
+                                  userSettingsYaml:
+                                    description: YAML-formatted user level "elasticsearch.yml"
+                                      setting overrides
+                                    type: string
+                                type: object
+                              type: array
                             instanceConfigurationID:
                               description: Computed Instance Configuration ID of the
                                 topology element
@@ -407,6 +448,11 @@ spec:
                         description: Optionally define the Enterprise Search configuration
                           options for the Enterprise Search Server
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Enterprise Search nodes will use. Note that this field
+                              will only work for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
@@ -487,6 +533,11 @@ spec:
                         description: Optionally define the Kibana configuration options
                           for the Kibana Server
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Kibana nodes will use. Note that this field will only
+                              work for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
@@ -665,6 +716,11 @@ spec:
                             description: Optionally enable debug mode for APM servers
                               - defaults to false
                             type: boolean
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              APM nodes will use. Note that this field will only work
+                              for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
@@ -751,6 +807,11 @@ spec:
                           applied to all topologies unless overridden on the topology
                           element
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Elasticsearch nodes will use. Note that this field will
+                              only work for internal users only.
+                            type: string
                           plugins:
                             description: List of Elasticsearch supported plugins,
                               which vary from version to version. Check the Stack
@@ -759,7 +820,6 @@ spec:
                               the UI and [ecctl](https://www.elastic.co/guide/en/ecctl/master/ecctl_stack_list.html)
                             items:
                               type: string
-                            minItems: 1
                             type: array
                           userSettingsJSON:
                             description: JSON-formatted user level "elasticsearch.yml"
@@ -843,9 +903,9 @@ spec:
                                 when disconnected
                               type: boolean
                           required:
+                          - alias
                           - deploymentID
                           type: object
-                        minItems: 1
                         type: array
                       resourceID:
                         description: The Elasticsearch resource unique identifier
@@ -899,6 +959,38 @@ spec:
                                     via the API or other clients.
                                   type: string
                               type: object
+                            config:
+                              description: Computed read-only configuration to avoid
+                                unsetting plan settings from 'topology.elasticsearch'
+                              items:
+                                properties:
+                                  plugins:
+                                    description: List of Elasticsearch supported plugins,
+                                      which vary from version to version. Check the
+                                      Stack Pack version to see which plugins are
+                                      supported for each version. This is currently
+                                      only available from the UI and [ecctl](https://www.elastic.co/guide/en/ecctl/master/ecctl_stack_list.html)
+                                    items:
+                                      type: string
+                                    type: array
+                                  userSettingsJSON:
+                                    description: JSON-formatted user level "elasticsearch.yml"
+                                      setting overrides
+                                    type: string
+                                  userSettingsOverrideJSON:
+                                    description: JSON-formatted admin (ECE) level
+                                      "elasticsearch.yml" setting overrides
+                                    type: string
+                                  userSettingsOverrideYaml:
+                                    description: YAML-formatted admin (ECE) level
+                                      "elasticsearch.yml" setting overrides
+                                    type: string
+                                  userSettingsYaml:
+                                    description: YAML-formatted user level "elasticsearch.yml"
+                                      setting overrides
+                                    type: string
+                                type: object
+                              type: array
                             instanceConfigurationID:
                               description: Computed Instance Configuration ID of the
                                 topology element
@@ -1000,6 +1092,11 @@ spec:
                         description: Optionally define the Enterprise Search configuration
                           options for the Enterprise Search Server
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Enterprise Search nodes will use. Note that this field
+                              will only work for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
@@ -1080,6 +1177,11 @@ spec:
                         description: Optionally define the Kibana configuration options
                           for the Kibana Server
                         properties:
+                          dockerImage:
+                            description: Optionally override the docker image the
+                              Kibana nodes will use. Note that this field will only
+                              work for internal users only.
+                            type: string
                           userSettingsJSON:
                             description: An arbitrary JSON object allowing (non-admin)
                               cluster owners to set their parameters (only one of
