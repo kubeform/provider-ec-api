@@ -81,20 +81,15 @@ spec:
                         ID:
                           description: Computed rule ID
                           type: string
-                        azureEndpointGuid:
-                          description: Optional Azure endpoint GUID
-                          type: string
-                        azureEndpointName:
-                          description: Optional Azure endpoint name
-                          type: string
                         description:
                           description: Optional rule description
                           type: string
                         source:
                           description: 'Required traffic filter source: IP address,
-                            CIDR mask, or VPC endpoint ID, not required when the type
-                            is azure_private_endpoint'
+                            CIDR mask, or VPC endpoint ID'
                           type: string
+                      required:
+                      - source
                       type: object
                     minItems: 1
                     type: array
@@ -137,7 +132,7 @@ spec:
                         type: integer
                     type: object
                   type:
-                    description: Required type of the ruleset ("ip", "vpce" or "azure_private_endpoint")
+                    description: Required type of the ruleset ("ip" or "vpce")
                     type: string
                 required:
                 - name
@@ -171,20 +166,15 @@ spec:
                         ID:
                           description: Computed rule ID
                           type: string
-                        azureEndpointGuid:
-                          description: Optional Azure endpoint GUID
-                          type: string
-                        azureEndpointName:
-                          description: Optional Azure endpoint name
-                          type: string
                         description:
                           description: Optional rule description
                           type: string
                         source:
                           description: 'Required traffic filter source: IP address,
-                            CIDR mask, or VPC endpoint ID, not required when the type
-                            is azure_private_endpoint'
+                            CIDR mask, or VPC endpoint ID'
                           type: string
+                      required:
+                      - source
                       type: object
                     minItems: 1
                     type: array
@@ -227,7 +217,7 @@ spec:
                         type: integer
                     type: object
                   type:
-                    description: Required type of the ruleset ("ip", "vpce" or "azure_private_endpoint")
+                    description: Required type of the ruleset ("ip" or "vpce")
                     type: string
                 required:
                 - name

@@ -26,14 +26,6 @@ type DeploymentListerExpansion interface{}
 // DeploymentNamespaceLister.
 type DeploymentNamespaceListerExpansion interface{}
 
-// ElasticsearchKeystoreListerExpansion allows custom methods to be added to
-// ElasticsearchKeystoreLister.
-type ElasticsearchKeystoreListerExpansion interface{}
-
-// ElasticsearchKeystoreNamespaceListerExpansion allows custom methods to be added to
-// ElasticsearchKeystoreNamespaceLister.
-type ElasticsearchKeystoreNamespaceListerExpansion interface{}
-
 // ExtensionListerExpansion allows custom methods to be added to
 // ExtensionLister.
 type ExtensionListerExpansion interface{}
