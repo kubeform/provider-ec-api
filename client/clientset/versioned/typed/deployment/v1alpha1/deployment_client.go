@@ -28,7 +28,6 @@ import (
 type DeploymentV1alpha1Interface interface {
 	RESTClient() rest.Interface
 	DeploymentsGetter
-	ElasticsearchKeystoresGetter
 	ExtensionsGetter
 	TrafficFiltersGetter
 	TrafficFilterAssociationsGetter
@@ -41,10 +40,6 @@ type DeploymentV1alpha1Client struct {
 
 func (c *DeploymentV1alpha1Client) Deployments(namespace string) DeploymentInterface {
 	return newDeployments(c, namespace)
-}
-
-func (c *DeploymentV1alpha1Client) ElasticsearchKeystores(namespace string) ElasticsearchKeystoreInterface {
-	return newElasticsearchKeystores(c, namespace)
 }
 
 func (c *DeploymentV1alpha1Client) Extensions(namespace string) ExtensionInterface {

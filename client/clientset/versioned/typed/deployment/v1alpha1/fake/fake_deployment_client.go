@@ -33,10 +33,6 @@ func (c *FakeDeploymentV1alpha1) Deployments(namespace string) v1alpha1.Deployme
 	return &FakeDeployments{c, namespace}
 }
 
-func (c *FakeDeploymentV1alpha1) ElasticsearchKeystores(namespace string) v1alpha1.ElasticsearchKeystoreInterface {
-	return &FakeElasticsearchKeystores{c, namespace}
-}
-
 func (c *FakeDeploymentV1alpha1) Extensions(namespace string) v1alpha1.ExtensionInterface {
 	return &FakeExtensions{c, namespace}
 }

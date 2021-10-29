@@ -58,8 +58,6 @@ func addKnownTypes(scheme *runtime.Scheme) error {
 	scheme.AddKnownTypes(SchemeGroupVersion,
 		&Deployment{},
 		&DeploymentList{},
-		&ElasticsearchKeystore{},
-		&ElasticsearchKeystoreList{},
 		&Extension{},
 		&ExtensionList{},
 		&TrafficFilter{},
