@@ -56,6 +56,8 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 	// Group=deployment.ec.kubeform.com, Version=v1alpha1
 	case v1alpha1.SchemeGroupVersion.WithResource("deployments"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Deployment().V1alpha1().Deployments().Informer()}, nil
+	case v1alpha1.SchemeGroupVersion.WithResource("elasticsearchkeystores"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Deployment().V1alpha1().ElasticsearchKeystores().Informer()}, nil
 	case v1alpha1.SchemeGroupVersion.WithResource("extensions"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Deployment().V1alpha1().Extensions().Informer()}, nil
 	case v1alpha1.SchemeGroupVersion.WithResource("trafficfilters"):
