@@ -31,32 +31,33 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/webhook"
 )
 
-func (r *Deployment) SetupWebhookWithManager(mgr ctrl.Manager) error {
+func (r *ElasticsearchKeystore) SetupWebhookWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewWebhookManagedBy(mgr).
 		For(r).
 		Complete()
 }
 
-//+kubebuilder:webhook:verbs=create;update;delete,path=/validate-deployment-ec-kubeform-com-v1alpha1-deployment,mutating=false,failurePolicy=fail,groups=deployment.ec.kubeform.com,resources=deployments,versions=v1alpha1,name=deployment.deployment.ec.kubeform.io,sideEffects=None,admissionReviewVersions=v1
+//+kubebuilder:webhook:verbs=create;update;delete,path=/validate-deployment-ec-kubeform-com-v1alpha1-elasticsearchkeystore,mutating=false,failurePolicy=fail,groups=deployment.ec.kubeform.com,resources=elasticsearchkeystores,versions=v1alpha1,name=elasticsearchkeystore.deployment.ec.kubeform.io,sideEffects=None,admissionReviewVersions=v1
 
-var _ webhook.Validator = &Deployment{}
+var _ webhook.Validator = &ElasticsearchKeystore{}
 
-var deploymentForceNewList = map[string]bool{
-	"/region": true,
+var elasticsearchkeystoreForceNewList = map[string]bool{
+	"/deployment_id": true,
+	"/setting_name":  true,
 }
 
 // ValidateCreate implements webhook.Validator so a webhook will be registered for the type
-func (r *Deployment) ValidateCreate() error {
+func (r *ElasticsearchKeystore) ValidateCreate() error {
 	return nil
 }
 
 // ValidateUpdate implements webhook.Validator so a webhook will be registered for the type
-func (r *Deployment) ValidateUpdate(old runtime.Object) error {
+func (r *ElasticsearchKeystore) ValidateUpdate(old runtime.Object) error {
 	if r.Spec.Resource.ID == "" {
 		return nil
 	}
 	newObj := r.Spec.Resource
-	res := old.(*Deployment)
+	res := old.(*ElasticsearchKeystore)
 	oldObj := res.Spec.Resource
 
 	jsnitr := jsoniter.Config{
@@ -88,7 +89,7 @@ func (r *Deployment) ValidateUpdate(old runtime.Object) error {
 		return err
 	}
 
-	for key, _ := range deploymentForceNewList {
+	for key, _ := range elasticsearchkeystoreForceNewList {
 		keySplit := strings.Split(key, "/*")
 		length := len(keySplit)
 		checkIfAnyDif := false
@@ -96,16 +97,16 @@ func (r *Deployment) ValidateUpdate(old runtime.Object) error {
 		util.CheckIfAnyDifference("", keySplit, 0, length, &checkIfAnyDif, tempNew, tempOld, tempNew)
 
 		if checkIfAnyDif && r.Spec.UpdatePolicy == base.UpdatePolicyDoNotDestroy {
-			return fmt.Errorf(`deployment "%v/%v" immutable field can't be updated. To update, change spec.updatePolicy to Destroy`, r.Namespace, r.Name)
+			return fmt.Errorf(`elasticsearchkeystore "%v/%v" immutable field can't be updated. To update, change spec.updatePolicy to Destroy`, r.Namespace, r.Name)
 		}
 	}
 	return nil
 }
 
 // ValidateDelete implements webhook.Validator so a webhook will be registered for the type
-func (r *Deployment) ValidateDelete() error {
+func (r *ElasticsearchKeystore) ValidateDelete() error {
 	if r.Spec.TerminationPolicy == base.TerminationPolicyDoNotTerminate {
-		return fmt.Errorf(`deployment "%v/%v" can't be terminated. To delete, change spec.terminationPolicy to Delete`, r.Namespace, r.Name)
+		return fmt.Errorf(`elasticsearchkeystore "%v/%v" can't be terminated. To delete, change spec.terminationPolicy to Delete`, r.Namespace, r.Name)
 	}
 	return nil
 }

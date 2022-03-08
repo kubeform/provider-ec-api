@@ -26,6 +26,8 @@ import (
 type Interface interface {
 	// Deployments returns a DeploymentInformer.
 	Deployments() DeploymentInformer
+	// ElasticsearchKeystores returns a ElasticsearchKeystoreInformer.
+	ElasticsearchKeystores() ElasticsearchKeystoreInformer
 	// Extensions returns a ExtensionInformer.
 	Extensions() ExtensionInformer
 	// TrafficFilters returns a TrafficFilterInformer.
@@ -48,6 +50,11 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 // Deployments returns a DeploymentInformer.
 func (v *version) Deployments() DeploymentInformer {
 	return &deploymentInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+}
+
+// ElasticsearchKeystores returns a ElasticsearchKeystoreInformer.
+func (v *version) ElasticsearchKeystores() ElasticsearchKeystoreInformer {
+	return &elasticsearchKeystoreInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }
 
 // Extensions returns a ExtensionInformer.

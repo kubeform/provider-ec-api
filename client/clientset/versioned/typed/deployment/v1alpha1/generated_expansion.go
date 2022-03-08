@@ -20,6 +20,8 @@ package v1alpha1
 
 type DeploymentExpansion interface{}
 
+type ElasticsearchKeystoreExpansion interface{}
+
 type ExtensionExpansion interface{}
 
 type TrafficFilterExpansion interface{}

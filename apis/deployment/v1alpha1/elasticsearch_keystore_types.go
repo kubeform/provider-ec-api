@@ -34,35 +34,17 @@ import (
 // +kubebuilder:subresource:status
 // +kubebuilder:printcolumn:name="Phase",type=string,JSONPath=`.status.phase`
 
-type TrafficFilter struct {
+type ElasticsearchKeystore struct {
 	metav1.TypeMeta   `json:",inline,omitempty"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              TrafficFilterSpec   `json:"spec,omitempty"`
-	Status            TrafficFilterStatus `json:"status,omitempty"`
+	Spec              ElasticsearchKeystoreSpec   `json:"spec,omitempty"`
+	Status            ElasticsearchKeystoreStatus `json:"status,omitempty"`
 }
 
-type TrafficFilterSpecRule struct {
-	// Optional Azure endpoint GUID
-	// +optional
-	AzureEndpointGuid *string `json:"azureEndpointGuid,omitempty" tf:"azure_endpoint_guid"`
-	// Optional Azure endpoint name
-	// +optional
-	AzureEndpointName *string `json:"azureEndpointName,omitempty" tf:"azure_endpoint_name"`
-	// Optional rule description
-	// +optional
-	Description *string `json:"description,omitempty" tf:"description"`
-	// Computed rule ID
-	// +optional
-	ID *string `json:"ID,omitempty" tf:"id"`
-	// Required traffic filter source: IP address, CIDR mask, or VPC endpoint ID, not required when the type is azure_private_endpoint
-	// +optional
-	Source *string `json:"source,omitempty" tf:"source"`
-}
+type ElasticsearchKeystoreSpec struct {
+	State *ElasticsearchKeystoreSpecResource `json:"state,omitempty" tf:"-"`
 
-type TrafficFilterSpec struct {
-	State *TrafficFilterSpecResource `json:"state,omitempty" tf:"-"`
-
-	Resource TrafficFilterSpecResource `json:"resource" tf:"resource"`
+	Resource ElasticsearchKeystoreSpecResource `json:"resource" tf:"resource"`
 
 	UpdatePolicy base.UpdatePolicy `json:"updatePolicy,omitempty" tf:"-"`
 
@@ -70,32 +52,28 @@ type TrafficFilterSpec struct {
 
 	ProviderRef core.LocalObjectReference `json:"providerRef" tf:"-"`
 
+	SecretRef *core.LocalObjectReference `json:"secretRef,omitempty" tf:"-"`
+
 	BackendRef *core.LocalObjectReference `json:"backendRef,omitempty" tf:"-"`
 }
 
-type TrafficFilterSpecResource struct {
+type ElasticsearchKeystoreSpecResource struct {
 	Timeouts *base.ResourceTimeout `json:"timeouts,omitempty" tf:"timeouts"`
 
 	ID string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// Optional ruleset description
+	// Optionally stores the remote keystore setting as a file. The default is false, which stores the keystore setting as string when value is a plain string
 	// +optional
-	Description *string `json:"description,omitempty" tf:"description"`
-	// Should the ruleset be automatically included in the new deployments (Defaults to false)
-	// +optional
-	IncludeByDefault *bool `json:"includeByDefault,omitempty" tf:"include_by_default"`
-	// Required name of the ruleset
-	Name *string `json:"name" tf:"name"`
-	// Required filter region, the ruleset can only be attached to deployments in the specific region
-	Region *string `json:"region" tf:"region"`
-	// Required list of rules, which the ruleset is made of.
-	// +kubebuilder:validation:MinItems=1
-	Rule []TrafficFilterSpecRule `json:"rule" tf:"rule"`
-	// Required type of the ruleset ("ip", "vpce" or "azure_private_endpoint")
-	Type *string `json:"type" tf:"type"`
+	AsFile *bool `json:"asFile,omitempty" tf:"as_file"`
+	// Required deployment ID of the Deployment that holds the Elasticsearch cluster where the keystore setting will be written to
+	DeploymentID *string `json:"deploymentID" tf:"deployment_id"`
+	// Required name for the keystore setting, if the setting already exists in the Elasticsearch cluster, it will be overridden
+	SettingName *string `json:"settingName" tf:"setting_name"`
+	// Required value of this setting. This can either be a string or a JSON object that is stored as a JSON string in the keystore.
+	Value *string `json:"-" sensitive:"true" tf:"value"`
 }
 
-type TrafficFilterStatus struct {
+type ElasticsearchKeystoreStatus struct {
 	// Resource generation, which is updated on mutation by the API Server.
 	// +optional
 	ObservedGeneration int64 `json:"observedGeneration,omitempty"`
@@ -108,10 +86,10 @@ type TrafficFilterStatus struct {
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 // +kubebuilder:object:root=true
 
-// TrafficFilterList is a list of TrafficFilters
-type TrafficFilterList struct {
+// ElasticsearchKeystoreList is a list of ElasticsearchKeystores
+type ElasticsearchKeystoreList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	// Items is a list of TrafficFilter CRD objects
-	Items []TrafficFilter `json:"items,omitempty"`
+	// Items is a list of ElasticsearchKeystore CRD objects
+	Items []ElasticsearchKeystore `json:"items,omitempty"`
 }
